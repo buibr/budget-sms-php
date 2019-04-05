@@ -77,7 +77,10 @@ class BudgetResponse {
 
         if(strtoupper(trim($status)) === 'ERR' ) {
             $this->status = false;
-            $this->response = BudgetErrors::get(trim($str[0]));
+            $this->response = [
+                'error_code' => $str[0],
+                'error_message' => BudgetErrors::get(trim($str[0])),
+            ];
             return false;
         }
 
