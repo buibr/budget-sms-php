@@ -3,6 +3,7 @@
 namespace buibr\Budget;
 
 use buibr\Budget\BudgetRequest;
+use buibr\Budget\BudgetResponse;
 use buibr\Budget\Exceptions\InvalidConfigurationException;
 
 
