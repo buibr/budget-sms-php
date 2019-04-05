@@ -205,6 +205,9 @@ class BudgetSMS {
             throw new InvalidConfigurationException("Receiver number not set.", 1002);
         }
 
+        //   remove any space
+        $number = trim($number);
+
         //  remove 00 on the begining.
         $number = ltrim($number, '00');
 
