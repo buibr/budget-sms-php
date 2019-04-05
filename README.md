@@ -44,7 +44,7 @@ $budget = new BudgetSMS( [
     'credit'=> 1, // optional
 ]);
 
-$send = $budget->send( '+38971789062', 'message content' );
+$send = $budget->send( '+38971xxxxxx', 'message content' );
 
 ```
 
