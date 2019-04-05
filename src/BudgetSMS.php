@@ -328,15 +328,10 @@ class BudgetSMS {
      * @return mizuResponse
      * @throws ErrorException
      */
-    public function sendTest( $receiver = null, $message = null, $raw = null )
+    public function operator( $receiver = null)
     {
-
         if(!empty($receiver)) {
             $this->setRecipient( $receiver );
-        }
-
-        if(!empty($message)) {
-            $this->setMessage( $message , $raw);
         }
 
         $this->validate();
@@ -345,9 +340,8 @@ class BudgetSMS {
         {
             
             $req = new BudgetRequest;
-            $req->setUrl( "https://{$this->server}/sendsms/" );
-            $req->setParams( $this->toArray() );
-
+            $req->setUrl( "https://{$this->server}/checkoperator/" );
+            $req->setParams( \array_merge(['check'=>$this->to], $this->toArray()) );
             $res = $req->request();
             
             return new BudgetResponse($res['content'], $res['curl'], $this);
@@ -355,9 +349,12 @@ class BudgetSMS {
         }
         catch( \ErrorException $e)
         {
-            return false;
+            throw $e;
         }
+
     }
+
+
 
 
 }

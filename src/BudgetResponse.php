@@ -52,36 +52,71 @@ class BudgetResponse {
      */
     public function extract( BudgetSMS $obj = null )
     {
-        //  
-        $str    = explode(' ', $this->data);
 
-        //  first caracters devine the status.
-        $status = array_shift($str);
-        
-        //  
-        if(strtoupper(trim($status)) === 'OK' ) {
-            
+        if(strpos($this->data, "OK:") > -1){
             //  
-            $this->response = [
-                'transaction'   => $str[0],
-                'price'         => $obj->price ? $str[1] : null,
-                'time'          => $obj->price ? $str[2] : null, // number after sms means time
-                'mccmnc'        => $obj->mccmnc ? $obj->price ?  $str[3] : $str[1] : null,
-                'credit'        => $obj->credit ? $obj->price ? $obj->mccmnc ? $str[4]: $str[3] : $str[1] : null,
-            ];
-            
-            //  
-            return $this->status = true;
+            $str    = explode(':', $this->data);
 
+            //  first caracters devine the status.
+            $status = array_shift($str);
+
+            //  
+            if(strtoupper(trim($status)) === 'OK' ) {
+                $this->response = [
+                    'transaction'   => null,
+                    'mccmnc'        => $str[0],
+                    'operator'      => $str[1],
+                    'price'         => $str[2],
+                ];
+
+                return $this->status = true;
+            }
+            elseif(strtoupper(trim($status)) === 'ERR' ) {
+                $this->response = [
+                    'error_code' => $str[0],
+                    'error_message' => BudgetErrors::get(trim($str[0])),
+                ];
+                return  $this->status = false;
+            }
+            else {
+                return $this->status = false;
+            }
         }
+        else {
+            //  
+            $str    = explode(' ', $this->data);
 
-        if(strtoupper(trim($status)) === 'ERR' ) {
-            $this->status = false;
-            $this->response = [
-                'error_code' => $str[0],
-                'error_message' => BudgetErrors::get(trim($str[0])),
-            ];
-            return false;
+            //  first caracters devine the status.
+            $status = array_shift($str);
+            
+            //  
+            if(strtoupper(trim($status)) === 'OK' ) {
+                
+                //  
+                $this->response = [
+                    'transaction'   => $str[0],
+                    'price'         => $obj->price ? $str[1] : null,
+                    'time'          => $obj->price ? $str[2] : null, // number after sms means time
+                    'mccmnc'        => $obj->mccmnc ? $obj->price ?  $str[3] : $str[1] : null,
+                    'credit'        => $obj->credit ? $obj->price ? $obj->mccmnc ? $str[4]: $str[3] : $str[1] : null,
+                ];
+                
+                //  
+                return $this->status = true;
+
+            }
+            elseif(strtoupper(trim($status)) === 'ERR' ) {
+                $this->status = false;
+                $this->response = [
+                    'error_code' => $str[0],
+                    'error_message' => BudgetErrors::get(trim($str[0])),
+                ];
+                return false;
+            }
+            else {
+                $this->status = false;
+                return false;
+            }
         }
 
         throw new InvalidResponseException("Unknow response.", 3001);
