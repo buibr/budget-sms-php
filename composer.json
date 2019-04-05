@@ -1,0 +1,26 @@
+{
+    "name": "buibr/budget-sms-php",
+    "description": "Budget SMS api request for php.",
+    "type": "library",
+    "keywords": [
+        "budget", 
+        "sms", 
+        "budget sms", 
+        "budget sms php"
+    ],
+    "require": {
+        "php": ">=7.0.0"
+    },
+    "authors": [
+        {
+            "name": "buibr",
+            "email": "burhan@wflux.pro"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "buibr\\Budget\\": "src/"
+        }
+    }
+
+}
