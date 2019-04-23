@@ -2,3 +2,5 @@ test-pull-dlr.php
 test-send-full.php
 test-push-dlr.php
 info.md
+
+/vendor
