@@ -167,7 +167,6 @@ class BudgetRequest {
         $this->curlOpt[CURLOPT_INFILESIZE]  = Null;
         $this->curlOpt[CURLOPT_TIMEOUT]     = $this->timeout;
 
-
         switch (strtolower(trim($this->method))) {
             case 'get':
                 $this->curlOpt[CURLOPT_HTTPGET] = true;

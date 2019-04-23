@@ -49,7 +49,7 @@ $send = $budget->send( '+38971xxxxxx', 'message content' );
 ```
 
 
-<h4>Response:</h4> 
+<h4>Response examples:</h4> 
 
 Success:
 
@@ -85,5 +85,59 @@ buibr\Budget\BudgetResponse Object
     [status] => 
     [response] => SMS message text is empty
     [data] => ERR 2001
+)
+```
+
+
+
+
+<h4>Push DLR Handler:</h4> 
+
+```php
+
+$budget = new BudgetSMS;;
+$dlr = $budget->pushDlr( $_GET ); // 3
+```
+
+<h6>Response</h6>
+```php
+Array
+(
+    [code] => 
+    [type] => 
+    [time] => 
+    [status] => 
+    [smsid] => xxx
+    [sms_code] => 7
+    [sms_message] => SMSC error, message could not be processed
+)
+```
+
+
+
+<h4>Pull DLR Handler:</h4> 
+
+```php
+
+$budget = new BudgetSMS( [
+    'username'=>'xxx',
+    'userid'=> 'xxx',
+    'handle'=>'xxx',
+]);
+$dlr = $budget->pullDLR('xxxx');
+```
+
+<h6>Response</h6>
+```php
+Array
+(
+    [code] => 200
+    [type] => text/html; charset=UTF-8
+    [time] => 0.261374
+    [status] => 
+    [smsid] => 
+    [sms_code] => 8
+    [sms_message] => Message not allowed
+    [data] => OK 8
 )
 ```

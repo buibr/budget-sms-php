@@ -2,9 +2,11 @@
 
 namespace buibr\Budget;
 
+use buibr\Budget\BudgetDlr;
 use buibr\Budget\BudgetRequest;
 use buibr\Budget\BudgetResponse;
 use buibr\Budget\Exceptions\InvalidConfigurationException;
+use buibr\Budget\Exceptions\InvalidRequestException;
 
 
 /** 
@@ -261,7 +263,7 @@ class BudgetSMS {
      * @param string $message - The message to send.
      * @param boolean $raw - encode to raw or url or no encode (true = \rawurlencode, false = \urlencode, null = no changes)
      * 
-     * @return mizuResponse
+     * @return BudgetResponse
      * @throws ErrorException
      */
     public function send( $receiver = null, $message = null, $raw = null )
@@ -296,7 +298,7 @@ class BudgetSMS {
     /**
      * Send sms to a number.
      * 
-     * @return mizuResponse
+     * @return BudgetResponse
      * @throws ErrorException
      */
     public function balance( )
@@ -325,7 +327,7 @@ class BudgetSMS {
     /**
      * Send sms to a number.
      * 
-     * @return mizuResponse
+     * @return BudgetResponse
      * @throws ErrorException
      */
     public function operator( $receiver = null)
@@ -355,6 +357,78 @@ class BudgetSMS {
     }
 
 
+     /**
+     * Pull DLR 
+     * https://www.budgetsms.net/sms-http-api/pull-dlr/
+     * 
+     * It is possible to fetch the DLR status for a single SMS message, sent through the HTTP API. 
+     * Although fetching DLR statuses through this call is possible, the preferred method is making use of Push DLR.
+     * 
+     * @return BudgetDlr
+     * @throws ErrorException
+     */
+    public function pullDLR( $sms_id ){
 
+        if(empty($sms_id)) {
+            throw new InvalidConfigurationException("'smsid' must be set ");
+        }
+
+        $this->validate();
+
+        try
+        {
+            
+            $req = new BudgetRequest;
+            $req->setUrl( "https://{$this->server}/checksms/" );
+            $req->setParams( \array_merge(['smsid'=>$sms_id], $this->toArray()) );
+            $data = $req->request();
+            
+            $res = new BudgetDlr($data, $this);
+            $res->smsid = $sms_id;
+            return $res;
+
+        }
+        catch( \ErrorException $e)
+        {
+            throw $e;
+        }
+    }
+
+
+    /**
+     * Push DLR
+     * https://www.budgetsms.net/sms-http-api/push-dlr/
+     * 
+     * With Push DLR you will receive DLR updates for SMS messages sent through your account. 
+     * There is no request you can perform, but it is actually a request made by BudgetSMS to your server.
+     * Each time BudgetSMS receives an update for a sent message, we check if the user has setup Push DLR. 
+     * If it is setup by the user, we will then forward this DLR notification to your server.
+     * 
+     * 
+     * This will fetch automaticaly the status from push and use as you wish.
+     */
+    public function pushDLR( $param = null ){
+
+        $res = new BudgetDlr;
+
+        if(empty($param)) {
+            throw new InvalidConfigurationException('Invalid sumbit data.');
+        }
+        
+        if(empty($param['id'])) {
+            throw new InvalidRequestException('Missing parameter smsid.');
+        }
+        
+        if(empty($param['status'])) {
+            throw new InvalidRequestException('Unknown sms status.');
+        }
+
+
+        $res->smsid         = $param['id'];
+        $res->sms_code      = $param['status'];
+        $res->sms_message   = BudgetErrors::dlr( $res->sms_code );
+
+        return $res;
+    }
 
 }
