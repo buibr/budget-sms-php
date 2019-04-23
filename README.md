@@ -97,9 +97,11 @@ buibr\Budget\BudgetResponse Object
 
 $budget = new BudgetSMS;;
 $dlr = $budget->pushDlr( $_GET ); // 3
+
 ```
 
 <h6>Response</h6>
+
 ```php
 
 Array
@@ -129,6 +131,7 @@ $dlr = $budget->pullDLR('xxxx');
 ```
 
 <h6>Response</h6>
+
 ```php
 
 Array
