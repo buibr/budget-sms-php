@@ -140,7 +140,7 @@ Array
     [type] => text/html; charset=UTF-8
     [time] => 0.261374
     [status] => 
-    [smsid] => 
+    [smsid] => xxx
     [sms_code] => 8
     [sms_message] => Message not allowed
     [data] => OK 8

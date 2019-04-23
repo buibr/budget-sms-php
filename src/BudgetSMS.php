@@ -423,9 +423,8 @@ class BudgetSMS {
             throw new InvalidRequestException('Unknown sms status.');
         }
 
-
-        $res->smsid         = $param['id'];
-        $res->sms_code      = $param['status'];
+        $res->smsid         = strip_tags(trim(stripcslashes($param['id'])));
+        $res->sms_code      = strip_tags(trim(stripcslashes($param['status'])));
         $res->sms_message   = BudgetErrors::dlr( $res->sms_code );
 
         return $res;
