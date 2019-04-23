@@ -101,6 +101,7 @@ $dlr = $budget->pushDlr( $_GET ); // 3
 
 <h6>Response</h6>
 ```php
+
 Array
 (
     [code] => 
@@ -129,6 +130,7 @@ $dlr = $budget->pullDLR('xxxx');
 
 <h6>Response</h6>
 ```php
+
 Array
 (
     [code] => 200
