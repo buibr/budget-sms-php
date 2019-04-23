@@ -411,15 +411,15 @@ class BudgetSMS {
 
         $res = new BudgetDlr;
 
-        if(empty($param)) {
+        if( empty($param) ) {
             throw new InvalidConfigurationException('Invalid sumbit data.');
         }
         
-        if(empty($param['id'])) {
+        if( !isset($param['id']) ) {
             throw new InvalidRequestException('Missing parameter smsid.');
         }
         
-        if(empty($param['status'])) {
+        if( !isset($param['status']) ) {
             throw new InvalidRequestException('Unknown sms status.');
         }
 
