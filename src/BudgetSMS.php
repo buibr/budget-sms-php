@@ -425,6 +425,8 @@ class BudgetSMS {
 
         $res->smsid         = strip_tags(trim(stripcslashes($param['id'])));
         $res->sms_code      = strip_tags(trim(stripcslashes($param['status'])));
+        $res->to            = strip_tags(trim(stripcslashes($param['to'])));
+        $res->date          = strip_tags(trim(stripcslashes($param['date'])));
         $res->sms_message   = BudgetErrors::dlr( $res->sms_code );
 
         return $res;

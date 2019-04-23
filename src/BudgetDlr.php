@@ -29,6 +29,11 @@ class BudgetDlr {
     public $smsid;
 
     /**
+     * Phone number the sms sent to.
+     */
+    public $to;
+
+    /**
      * Response code from budget.
      */
     public $sms_code;
@@ -37,6 +42,11 @@ class BudgetDlr {
      * Message based on the code in response
      */
     public $sms_message;
+
+    /**
+     * Timestamp date when the even has happend.
+     */
+    public $date;
 
     /**
      * 
