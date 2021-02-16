@@ -3,37 +3,38 @@
 namespace buibr\Budget;
 
 
-use buibr\Budget\BudgetSMS;
-use buibr\Budget\BudgetErrors;
 use buibr\Budget\Exceptions\InvalidResponseException;
 
-/** 
- * 
- * Author:      Burhan Ibraimi <burhan@wflux.pro>
- * Company      wFlux
- * 
+/**
+ * Author:      Burhan Ibraimi <mail@buib.me>
+ *
  * Class:       BudgetResponse
  * Created:     Thu Apr 04 2019 7:38:03 PM
- * 
-**/
-class BudgetResponse {
-
+ *
+ **/
+class BudgetResponse
+{
+    
     public $code;
     public $type;
     public $time;
     public $status;
     public $response;
-
+    
     /**
-     * 
-     * @param string $data - response from budget sms
+     * BudgetResponse constructor.
+     *
+     * @param      $data - response from budget sms
+     * @param null $curl
+     * @param null $obj
+     *
+     * @throws \buibr\Budget\Exceptions\InvalidResponseException
      */
-    public function __construct($data, $curl = null, $obj = null)
+    public function __construct($data, $curl = NULL, $obj = NULL)
     {
-
-        $header_size    = curl_getinfo( $curl, CURLINFO_HEADER_SIZE );
-        $header         = substr( $data, 0, $header_size );
-        $body           = trim( substr($data, $header_size) );
+        $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
+        $header = substr($data, 0, $header_size);
+        $body = trim(substr($data, $header_size));
         
         $this->code = curl_getinfo($curl, CURLINFO_RESPONSE_CODE);
         $this->type = curl_getinfo($curl, CURLINFO_CONTENT_TYPE);
@@ -43,86 +44,78 @@ class BudgetResponse {
         
         return $this->status;
     }
-
-
+    
+    
     /**
      * Parse response to status and data.
-     * 
      * sms reponse format: {STATUS} {TRANSACTION_ID} {CREDIT} {NUMBER CREDIT} {}
+     *
+     * @param \buibr\Budget\BudgetSMS|null $obj
+     *
+     * @return bool
+     * @throws \buibr\Budget\Exceptions\InvalidResponseException
      */
-    public function extract( BudgetSMS $obj = null )
+    public function extract(BudgetSMS $obj = NULL)
     {
-
-        if(strpos($this->data, "OK:") > -1){
-            //  
-            $str    = explode(':', $this->data);
-
-            //  first caracters devine the status.
-            $status = array_shift($str);
-
-            //  
-            if(strtoupper(trim($status)) === 'OK' ) {
-                $this->response = [
-                    'transaction'   => null,
-                    'mccmnc'        => $str[0],
-                    'operator'      => $str[1],
-                    'price'         => $str[2],
-                ];
-
-                return $this->status = true;
-            }
-            elseif(strtoupper(trim($status)) === 'ERR' ) {
-                $this->response = [
-                    'error_code' => $str[0],
-                    'error_message' => BudgetErrors::get(trim($str[0])),
-                ];
-                return  $this->status = false;
-            }
-            else {
-                return $this->status = false;
-            }
-        }
-        else {
-            //  
-            $str    = explode(' ', $this->data);
-
+        if (strpos($this->data, "OK:") > -1) {
+            $str = explode(':', $this->data);
+            
             //  first caracters devine the status.
             $status = array_shift($str);
             
-            //  
-            if(strtoupper(trim($status)) === 'OK' ) {
-                
-                //  
+            if (strtoupper(trim($status)) === 'OK') {
                 $this->response = [
-                    'transaction'   => $str[0],
-                    'price'         => $obj->price ? $str[1] : null,
-                    'time'          => $obj->price ? $str[2] : null, // number after sms means time
-                    'mccmnc'        => $obj->mccmnc ? $obj->price ?  $str[3] : $str[1] : null,
-                    'credit'        => $obj->credit ? $obj->price ? $obj->mccmnc ? $str[4]: $str[3] : $str[1] : null,
+                    'transaction' => NULL,
+                    'mccmnc'      => $str[0],
+                    'operator'    => $str[1],
+                    'price'       => $str[2],
                 ];
                 
-                //  
-                return $this->status = true;
-
-            }
-            elseif(strtoupper(trim($status)) === 'ERR' ) {
-                $this->status = false;
+                return $this->status = TRUE;
+            } elseif (strtoupper(trim($status)) === 'ERR') {
                 $this->response = [
-                    'error_code' => $str[0],
+                    'error_code'    => $str[0],
                     'error_message' => BudgetErrors::get(trim($str[0])),
                 ];
-                return false;
+                return $this->status = FALSE;
+            } else {
+                return $this->status = FALSE;
             }
-            else {
-                $this->status = false;
-                return false;
+        } else {
+            $str = explode(' ', $this->data);
+            
+            $status = array_shift($str);
+            
+            //  
+            if (strtoupper(trim($status)) === 'OK') {
+                
+                $this->response = [
+                    'transaction' => $str[0],
+                    'price'       => $obj->price ? $str[1] : NULL,
+                    'time'        => $obj->price ? $str[2] : NULL, // number after sms means time
+                    'mccmnc'      => $obj->mccmnc ? $obj->price ? $str[3] : $str[1] : NULL,
+                    'credit'      => $obj->credit ? $obj->price ? $obj->mccmnc ? $str[4] : $str[3] : $str[1] : NULL,
+                ];
+                
+                return $this->status = TRUE;
+                
+            } elseif (strtoupper(trim($status)) === 'ERR') {
+                $this->status = FALSE;
+                $this->response = [
+                    'error_code'    => $str[0],
+                    'error_message' => BudgetErrors::get(trim($str[0])),
+                ];
+                return FALSE;
+            } else {
+                $this->status = FALSE;
+                return FALSE;
             }
         }
-
+        
         throw new InvalidResponseException("Unknow response.", 3001);
-
+        
     }
-
+    
     
     /**
      * Convert all parameters to array
@@ -130,14 +123,13 @@ class BudgetResponse {
     public function toArray()
     {
         $a = [];
-
-        foreach($this as $key=>$val)
-        {
+        
+        foreach ($this as $key => $val) {
             $a[$key] = $val;
         }
-
+        
         return $a;
     }
-
-
+    
+    
 }   

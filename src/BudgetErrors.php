@@ -2,17 +2,16 @@
 
 namespace buibr\Budget;
 
-/** 
- * 
- * Author:      Burhan Ibraimi <burhan@wflux.pro>
- * Company      wFlux
- * 
- * Class:       {classname}
+/**
+ * Author:      Burhan Ibraimi <mail@buib.me>
+ *
+ * Class:       BudgetErrors
  * Created:     Thu Apr 04 2019 9:24:31 PM
- * 
-**/
-class BudgetErrors {
-
+ *
+ **/
+class BudgetErrors
+{
+    
     private static $errors = [
         "1001" => "Not enough credits to send messages",
         "1002" => "Identification failed. Wrong credentials",
@@ -57,47 +56,54 @@ class BudgetErrors {
         "7003" => "Bad number format",
         "7901" => "Unexpected error. Contact BudgetSMS",
         "7902" => "HLR provider error. Contact BudgetSMS",
-        "7903" => "HLR provider error. Contact BudgetSMS"
+        "7903" => "HLR provider error. Contact BudgetSMS",
     ];
-
+    
     private static $dlr = [
-        "0"	    => "Message is sent, no status yet (default)",
-        "1"	    => "Message is delivered",
-        "2"	    => "Message is not sent",
-        "3"	    => "Message delivery failed",
-        "4"	    => "Message is sent",
-        "5"	    => "Message expired",
-        "6"	    => "Message has an invalid destination address",
-        "7"	    => "SMSC error, message could not be processed",
-        "8"	    => "Message not allowed",
-        "11"	=> "Message status unknown, usually after 24 hours without update SMSC",
-        "12"	=> "Message status unknown, SMSC received unknown status code",
-        "13"	=> "Message status unknown, no status update received from SMSC after 72 hours",
+        "0"  => "Message is sent, no status yet (default)",
+        "1"  => "Message is delivered",
+        "2"  => "Message is not sent",
+        "3"  => "Message delivery failed",
+        "4"  => "Message is sent",
+        "5"  => "Message expired",
+        "6"  => "Message has an invalid destination address",
+        "7"  => "SMSC error, message could not be processed",
+        "8"  => "Message not allowed",
+        "11" => "Message status unknown, usually after 24 hours without update SMSC",
+        "12" => "Message status unknown, SMSC received unknown status code",
+        "13" => "Message status unknown, no status update received from SMSC after 72 hours",
     ];
-
+    
     /**
-     *  Request errors
+     *
+     *
+     * @param $id
+     *
      * @return string
      */
-    public static function get( $id ) {
-        if(\array_key_exists($id, self::$errors)) {
+    public static function get($id)
+    {
+        if (\array_key_exists($id, self::$errors)) {
             return self::$errors[$id];
         }
-
+        
         return $id;
     }
-
+    
     /**
-     * sms status codes.
-     * @return string.
+     * SMS status code
+     *
+     * @param $id
+     *
+     * @return string
      */
-    public static function dlr( $id ){
-
-        if(\array_key_exists($id, self::$dlr)) {
+    public static function dlr($id)
+    {
+        if (\array_key_exists($id, self::$dlr)) {
             return self::$dlr[$id];
         }
-
+        
         return $id;
     }
-
+    
 }

@@ -1,26 +1,34 @@
 {
-    "name": "buibr/budget-sms-php",
-    "description": "Budget SMS api request for php.",
-    "type": "library",
-    "keywords": [
-        "budget", 
-        "sms", 
-        "budget sms", 
-        "budget sms php"
-    ],
-    "require": {
-        "php": ">=7.0.0"
-    },
-    "authors": [
-        {
-            "name": "buibr",
-            "email": "burhan@wflux.pro"
-        }
-    ],
-    "autoload": {
-        "psr-4": {
-            "buibr\\Budget\\": "src/"
-        }
+  "name": "buibr/budget-sms-php",
+  "description": "Budget SMS API request with PHP.",
+  "type": "library",
+  "license": "BSD-4-Clause",
+  "keywords": [
+    "budget",
+    "sms",
+    "budget sms",
+    "budget sms php",
+    "php budget sms"
+  ],
+  "require": {
+    "php": ">=7.0.0",
+    "ext-curl": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^7.5",
+    "vimeo/psalm": "^4.6"
+  },
+  "authors": [
+    {
+      "name": "buibr",
+      "email": "burhan@wflux.pro",
+      "homepage": "https://buib.me"
     }
+  ],
+  "autoload": {
+    "psr-4": {
+      "buibr\\Budget\\": "src/"
+    }
+  }
 
 }

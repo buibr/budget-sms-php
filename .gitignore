@@ -4,3 +4,5 @@ test-push-dlr.php
 info.md
 
 /vendor
+
+.phpunit.cache

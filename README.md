@@ -96,7 +96,7 @@ buibr\Budget\BudgetResponse Object
 ```php
 
 $budget = new BudgetSMS;;
-$dlr = $budget->pushDlr( $_GET ); // 3
+$dlr = $budget->pushDlr( $_GET );
 
 ```
 
