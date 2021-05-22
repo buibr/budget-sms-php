@@ -6,9 +6,9 @@
 composer requre buibr/budget-sms-php
 ```
 
-<h4>Usage:</h4> 
+### Usage:
 
-Example 1:
+###### Example 1:
 ```php
 $budget = new \buibr\Budget\BudgetSMS( [
     'username'=>'xxx',
@@ -30,7 +30,7 @@ $send = $budget->send();
 
 ```
 
-Example 2:
+######  Example 2:
 ```php
 use buibr\Budget\BudgetSMS;
 
@@ -49,9 +49,9 @@ $send = $budget->send( '+38971xxxxxx', 'message content' );
 ```
 
 
-<h4>Response examples:</h4> 
+### Response examples:
 
-Success:
+###### Success:
 ```php
 buibr\Budget\BudgetResponse Object
 (
@@ -72,7 +72,7 @@ buibr\Budget\BudgetResponse Object
 )
 ```
 
-Error:
+###### Error:
 ```php
 buibr\Budget\BudgetResponse Object
 (
@@ -85,16 +85,16 @@ buibr\Budget\BudgetResponse Object
 )
 ```
 
-<h4>Push DLR Handler:</h4>
-```php
+### Push DLR Handler (webhook to accept requests):
 
+###### Request: 
+```php 
 $budget = new BudgetSMS;
-$dlr = $budget->pushDlr( $_GET );
-
+$dlr = $budget->pushDlr( $payload );
 ```
 
-<h6>Response</h6>
-```php
+###### Response:
+```php 
 Array
 (
     [code] => 
@@ -107,8 +107,10 @@ Array
 )
 ```
 
-<h4>Pull DLR Handler:</h4>
-```php
+### Pull DLR Handler:
+
+###### Request
+```php 
 $budget = new BudgetSMS( [
     'username'=>'xxx',
     'userid'=> 'xxx',
@@ -117,8 +119,9 @@ $budget = new BudgetSMS( [
 $dlr = $budget->pullDLR('xxxx');
 ```
 
-<h6>Response</h6>
-```php
+###### Response
+
+```php 
 Array
 (
     [code] => 200
