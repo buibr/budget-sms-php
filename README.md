@@ -52,7 +52,6 @@ $send = $budget->send( '+38971xxxxxx', 'message content' );
 <h4>Response examples:</h4> 
 
 Success:
-
 ```php
 buibr\Budget\BudgetResponse Object
 (
@@ -74,8 +73,6 @@ buibr\Budget\BudgetResponse Object
 ```
 
 Error:
-
-
 ```php
 buibr\Budget\BudgetResponse Object
 (
@@ -88,22 +85,16 @@ buibr\Budget\BudgetResponse Object
 )
 ```
 
-
-
-
-<h4>Push DLR Handler:</h4> 
-
+<h4>Push DLR Handler:</h4>
 ```php
 
-$budget = new BudgetSMS;;
+$budget = new BudgetSMS;
 $dlr = $budget->pushDlr( $_GET );
 
 ```
 
 <h6>Response</h6>
-
 ```php
-
 Array
 (
     [code] => 
@@ -116,12 +107,8 @@ Array
 )
 ```
 
-
-
-<h4>Pull DLR Handler:</h4> 
-
+<h4>Pull DLR Handler:</h4>
 ```php
-
 $budget = new BudgetSMS( [
     'username'=>'xxx',
     'userid'=> 'xxx',
@@ -131,9 +118,7 @@ $dlr = $budget->pullDLR('xxxx');
 ```
 
 <h6>Response</h6>
-
 ```php
-
 Array
 (
     [code] => 200

@@ -139,10 +139,11 @@ class BudgetRequest
      */
     public function setMethod($method = NULL)
     {
-        if (is_null($method))
+        if (is_null($method)) {
             $this->method = 'get';
-        else
-            $this->method = strtolower(trim($method));
+        }
+        
+        $this->method = strtolower(trim($method));
     }
     
     /**
@@ -199,8 +200,7 @@ class BudgetRequest
             
             return ['content' => $response, 'curl' => $this->curl];
             
-        }
-        catch (\ErrorException $e) {
+        } catch (\ErrorException $e) {
             
             if (isset($this->curl) && is_resource($this->curl)) {
                 curl_close($this->curl);

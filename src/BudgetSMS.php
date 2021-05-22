@@ -140,7 +140,6 @@ class BudgetSMS
     public function __set($attr, $val)
     {
         if (\property_exists($this, $attr)) {
-            
             if ($attr === 'from')
                 $this->setSender($val);
             elseif ($attr === 'message')
@@ -247,7 +246,7 @@ class BudgetSMS
     }
     
     /**
-     * Validate the SMS Sending by Mizu
+     * Validate request attributes
      * @return void
      * @throws \buibr\Budget\Exceptions\InvalidConfigurationException
      */

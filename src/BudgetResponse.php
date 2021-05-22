@@ -14,11 +14,19 @@ use buibr\Budget\Exceptions\InvalidResponseException;
  **/
 class BudgetResponse
 {
-    
+    /** @var mixed  */
     public $code;
+    
+    /** @var mixed  */
     public $type;
+    
+    /** @var mixed  */
     public $time;
+    
+    /** @var  */
     public $status;
+    
+    /** @var  */
     public $response;
     
     /**
@@ -44,7 +52,6 @@ class BudgetResponse
         
         return $this->status;
     }
-    
     
     /**
      * Parse response to status and data.
@@ -116,9 +123,8 @@ class BudgetResponse
         
     }
     
-    
     /**
-     * Convert all parameters to array
+     * @return array
      */
     public function toArray()
     {
@@ -130,6 +136,4 @@ class BudgetResponse
         
         return $a;
     }
-    
-    
 }   

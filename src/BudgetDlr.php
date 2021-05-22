@@ -61,13 +61,14 @@ class BudgetDlr
      */
     public function __construct(&$res = NULL, $obj = NULL)
     {
-        if ($res && $res['content'] && $res['curl']) {
-            
+        if (isset($res['curl'])) {
             $header_size = curl_getinfo($res['curl'], CURLINFO_HEADER_SIZE);
-            
             $this->code = curl_getinfo($res['curl'], CURLINFO_RESPONSE_CODE);
             $this->type = curl_getinfo($res['curl'], CURLINFO_CONTENT_TYPE);
             $this->time = curl_getinfo($res['curl'], CURLINFO_TOTAL_TIME);
+        }
+        
+        if(isset($res['content'])) {
             $this->extract($obj, trim(substr($res['content'], $header_size)));
         }
     }

@@ -9,9 +9,9 @@ class SendSMSTest extends \PHPUnit\Framework\TestCase
     public function setUp()
     {
         $this->budget = new BudgetSMS([
-            'username' => 'iwinback',
-            'userid'   => '10651',
-            'handle'   => '3131db62929367453d93079caaeef9a1',
+            'username' => 'buibr',
+            'userid'   => '21806',
+            'handle'   => 'a55071c51f8b705cf20cc13ee2e80a97',
             'from'     => 'Test New',
             'price'    => 1,
             'mccmnc'   => 1,
@@ -20,7 +20,7 @@ class SendSMSTest extends \PHPUnit\Framework\TestCase
     }
     
     /** @test */
-    public function test_set_receiver_missing()
+    public function test_validate_receiver_missing()
     {
         $this->expectExceptionCode(1005);
         $this->expectExceptionMessage('Receiver number not set.');
@@ -28,12 +28,9 @@ class SendSMSTest extends \PHPUnit\Framework\TestCase
     }
     
     /** @test */
-    public function test_set_receiver()
+    public function test_validate_receiver_set()
     {
         $this->budget->setRecipient('+38971789062');
         $this->assertNull($this->budget->validate());
     }
-    
-    
-    
 }
