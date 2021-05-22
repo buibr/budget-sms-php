@@ -6,3 +6,4 @@ info.md
 /vendor
 
 .phpunit.cache
+.idea
