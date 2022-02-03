@@ -3,7 +3,7 @@
 <h4>Install with composer</h4>
 
 ```terminal
-composer requre buibr/budget-sms-php
+composer require buibr/budget-sms-php
 ```
 
 ### Usage:
